@@ -3,8 +3,9 @@
         <div class="month" v-for="{ id, name, days } in calendar" :key="id">
             <h3 class="month__name">{{ name }}</h3>
             <div class="month__grid">
-                <span class="month__day" v-for="({ number }) in days" :key="number">
+                <span class="month__day" v-for="({ birthdays, number }) in days" :key="number">
                     {{ number }}
+                    <Indicator v-if="haveBirthdayInThisDay(birthdays)" />
                 </span>
             </div>
         </div>
@@ -13,7 +14,8 @@
 
 <script setup lang="ts">
 import { Month } from '@/types/Calendar';
-import { Customer } from '@/types/Customers';
+import { Customer, CustomerName } from '@/types/Customers';
+import Indicator from './Indicator/Indicator.vue';
 import { onMounted, ref } from 'vue';
 
 import useUtils from '@/utils/useUtils'
@@ -135,6 +137,10 @@ const { getDay, getMonth } = useUtils()
         }
     ])
     
+    const haveBirthdayInThisDay = (birthdays: CustomerName[]) => {
+        return birthdays.length > 0
+    }
+
     function fillCalendarWithBirthdays (month: Month, customers: Customer[]) {
         // TODO
         // Gerar um novo estado para os calendários ao invés de dar o push no array
@@ -193,6 +199,10 @@ const { getDay, getMonth } = useUtils()
         &__grid {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
+        }
+
+        &__day {
+            position: relative;
         }
     }
 </style>@/utils/useUtils
