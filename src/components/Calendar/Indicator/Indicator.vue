@@ -21,39 +21,39 @@
         opacity: 1;
 
         &--1 {
-            width: .75rem;
-            height: .75rem;
-            opacity: 0.2;
-        }
-        &--2 {
             width: 1rem;
             height: 1rem;
-            opacity: 0.25;
+            opacity: 0.3;
         }
         &--2 {
             width: 1.25rem;
             height: 1.25rem;
-            opacity: 0.30;
+            opacity: 0.35;
         }
-        &--3 {
+        &--2 {
             width: 1.5rem;
             height: 1.5rem;
-            opacity: 0.35;
+            opacity: 0.4;
         }
         &--3 {
             width: 1.75rem;
             height: 1.75rem;
-            opacity: 0.40;
+            opacity: 0.45;
         }
-        &--4 {
+        &--3 {
             width: 2rem;
             height: 2rem;
-            opacity: 0.45;
+            opacity: 0.5;
         }
         &--4 {
             width: 2.25rem;
             height: 2.25rem;
-            opacity: 0.50;
+            opacity: 0.55;
+        }
+        &--4 {
+            width: 2.5rem;
+            height: 2.5rem;
+            opacity: 0.6;
         }
     }
 </style>

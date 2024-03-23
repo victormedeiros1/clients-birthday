@@ -214,12 +214,16 @@ const { getDay, getMonth } = useUtils()
 
 <style scoped lang="scss">
     .calendar {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        flex: 1;
         gap: $g-8;
     }
 
     .month {
+        width: 100%;
+        max-width: 300px;
         border: 1px solid $gray;
         border-radius: .375rem;
         padding: $p-8;
@@ -227,7 +231,7 @@ const { getDay, getMonth } = useUtils()
         &__grid {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
-            gap: $g-8 0;
+            gap: $g-12 0;
         }
 
         &__day {
@@ -235,7 +239,7 @@ const { getDay, getMonth } = useUtils()
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: $fs-12;
+            font-size: $fs-16;
             font-weight: bold;
         }
     }
