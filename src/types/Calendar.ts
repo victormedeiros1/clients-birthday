@@ -1,21 +1,14 @@
-export interface Calendar {
-    [month: string]: {
-        days: number[]
-    }
-}
+import { CustomerName } from "./Customers";
 
 export interface Month {
-    id: number,
-    name: string,
-    numberMonth: string,
-    daysQuantity: number,
-    days: { [key: string]: Day[] },
+    id: number;
+    name: string;
+    number: string;
+    daysQuantity: number;
+    days: { [date: string]: Day };
 }
 
 export interface Day {
-    [date: string]: string
-};
-
-export interface BirthdayCustomers  {
-    name: string
+    number: number;
+    birthdays: CustomerName[];
 }

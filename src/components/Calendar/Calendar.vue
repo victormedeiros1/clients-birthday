@@ -1,10 +1,10 @@
 <template>
     <div class="calendar">
-        <div class="month" v-for="month in calendar" :key="month.id">
-            <h3 class="month__name">{{ month.name }}</h3>
+        <div class="month" v-for="{ id, name, days } in calendar" :key="id">
+            <h3 class="month__name">{{ name }}</h3>
             <div class="month__grid">
-                <span class="month__day" v-for="day, index in month.days" :key="day">
-                    {{ index.split('/')[0] }}
+                <span class="month__day" v-for="({ number }) in days" :key="number">
+                    {{ number }}
                 </span>
             </div>
         </div>
@@ -13,32 +13,38 @@
 
 <script setup lang="ts">
 import { Month } from '@/types/Calendar';
+import { Customer } from '@/types/Customers';
 import { onMounted, ref } from 'vue';
-    const customers = [
+
+import useUtils from '@/utils/useUtils'
+
+const { getDay, getMonth } = useUtils()
+
+    const customers: Customer[] = [
         {
             id: 0,
             name: 'João da Silva',
-            birthday: '01/01/2024'
+            birthday: '01/01/2001'
         },
         {
             id: 1,
             name: 'Maria da Silva',
-            birthday: '02/01/2024'
+            birthday: '02/01/2003'
         },
         {
             id: 2,
             name: 'José da Silva',
-            birthday: '03/01/2024'
+            birthday: '03/01/1995'
         },
         {
             id: 3,
             name: 'José Victor',
-            birthday: '05/08/2024'
+            birthday: '05/08/1975'
         },
         {
             id: 3,
             name: 'Luciano Silva',
-            birthday: '01/01/2024'
+            birthday: '01/01/1988'
         }
     ]
 
@@ -46,119 +52,129 @@ import { onMounted, ref } from 'vue';
         {
             id: 0,
             name: 'janeiro',
-            numberMonth: '01',
+            number: '01',
             daysQuantity: 31,
             days: {}
         },
         {
             id: 1,
             name: 'fevereiro',
-            numberMonth: '02',
+            number: '02',
             daysQuantity: 28,
             days: {}
         },
         {
             id: 2,
             name: 'março',
-            numberMonth: '03',
+            number: '03',
             daysQuantity: 31,
             days: {}
         },
         {
             id: 3,
             name: 'abril',
-            numberMonth: '04',
+            number: '04',
             daysQuantity: 30,
             days: {}
         },
         {
             id: 4,
             name: 'maio',
-            numberMonth: '05',
+            number: '05',
             daysQuantity: 31,
             days: {}
         },
         {
             id: 5,
             name: 'junho',
-            numberMonth: '06',
+            number: '06',
             daysQuantity: 30,
             days: {}
         },
         {
             id: 6,
             name: 'julho',
-            numberMonth: '07',
+            number: '07',
             daysQuantity: 31,
             days: {}
         },
         {
             id: 7,
             name: 'agosto',
-            numberMonth: '08',
+            number: '08',
             daysQuantity: 31,
             days: {}
         },
         {
             id: 8,
             name: 'setembro',
-            numberMonth: '09',
+            number: '09',
             daysQuantity: 30,
             days: {}
         },
         {
             id: 9,
             name: 'outubro',
-            numberMonth: '10',
+            number: '10',
             daysQuantity: 31,
             days: {}
         },
         {
             id: 10,
             name: 'novembro',
-            numberMonth: '11',
+            number: '11',
             daysQuantity: 30,
             days: {}
         },
         {
             id: 11,
             name: 'dezembro',
-            numberMonth: '12',
+            number: '12',
             daysQuantity: 31,
             days: {}
         }
     ])
     
-    function mountCalendar() {
-        calendar.value.forEach((month: Month) => {
-            for (let i = 1; i <= month.daysQuantity; i++) {
-                const DD = i < 10 ? `0${i}` : i
-                const MM = Number(month.numberMonth) < 10 ? `${month.numberMonth}` : month.numberMonth
-                const date = `${DD}/${MM}`
-                month.days[date] = []
+    function fillCalendarWithBirthdays (month: Month, customers: Customer[]) {
+        // TODO
+        // Gerar um novo estado para os calendários ao invés de dar o push no array
+        customers.forEach(({ name, birthday }) => {
+            const dayCustomer = getDay(birthday)
+            const monthCustomer = getMonth(birthday)
+
+            const keyBirthday = dayCustomer + '/' + monthCustomer
+            
+            if (month.number === monthCustomer) {
+                month.days[keyBirthday].birthdays.push({ name })
             }
         })
-
-        fillCalendarWithBirthdays()
     }
 
-    function fillCalendarWithBirthdays () {
-        calendar.value.forEach((month: Month) => {
-            customers.forEach(({ name, birthday }) => {
-                const dayBirthdayCustomer = birthday.split('/')[0]
-                const monthBirthdayCustomer = birthday.split('/')[1]
-
-                const keyBirthday = dayBirthdayCustomer + '/' + monthBirthdayCustomer
-
-                if (month.numberMonth === monthBirthdayCustomer) {
-                    month.days[keyBirthday].push({ name });
+    function assembleCalendarStructure() {
+        const fillCalendarWithDays = (calendar: Month[]): void => {
+            // TODO
+            // Gerar um novo estado para os calendários ao invés de modificá-lo diretamente
+            calendar.forEach((month: Month) => {
+                for (let i = 1; i <= month.daysQuantity; i++) {
+                    const DD = i < 10 ? `0${i}` : i
+                    const MM = Number(month.number) < 10 ? `${month.number}` : month.number
+                    const date = `${DD}/${MM}`
+                    
+                    month.days[date] = {
+                        number: i,
+                        birthdays: []
+                    }
                 }
+
+                fillCalendarWithBirthdays(month, customers)
             })
-        })
+        }
+
+        fillCalendarWithDays(calendar.value)
     }
 
     onMounted(() => {
-        mountCalendar()
+        assembleCalendarStructure()
     })
 </script>
 
@@ -179,12 +195,4 @@ import { onMounted, ref } from 'vue';
             grid-template-columns: repeat(7, 1fr);
         }
     }
-
-    .one {
-        background-color: rgb(255, 0, 0, 0.1);
-    }
-
-    .two {
-        background-color: rgb(255, 255, 0, 0.1);
-    }
-</style>
+</style>@/utils/useUtils
