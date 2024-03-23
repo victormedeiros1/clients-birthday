@@ -5,7 +5,10 @@
             <div class="month__grid">
                 <span class="month__day" v-for="({ birthdays, number }) in days" :key="number">
                     {{ number }}
-                    <Indicator v-if="haveBirthdayInThisDay(birthdays)" />
+                    <Indicator
+                        v-if="haveBirthdayInThisDay(birthdays)"
+                        :intensity="birthdays.length"
+                     />
                 </span>
             </div>
         </div>
@@ -25,27 +28,52 @@ const { getDay, getMonth } = useUtils()
     const customers: Customer[] = [
         {
             id: 0,
-            name: 'João da Silva',
+            name: 'Marquinhos',
             birthday: '01/01/2001'
         },
         {
             id: 1,
-            name: 'Maria da Silva',
+            name: 'Arrascaeta',
             birthday: '02/01/2003'
         },
         {
             id: 2,
-            name: 'José da Silva',
+            name: 'Bruno Henrique',
             birthday: '03/01/1995'
         },
         {
             id: 3,
-            name: 'José Victor',
+            name: 'Gerson',
             birthday: '05/08/1975'
         },
         {
-            id: 3,
-            name: 'Luciano Silva',
+            id: 4,
+            name: 'Everton Ribeiro',
+            birthday: '05/08/2000'
+        },
+        {
+            id: 5,
+            name: 'Gabriel Barbosa',
+            birthday: '05/08/2004'
+        },
+        {
+            id: 6,
+            name: 'Pedro',
+            birthday: '12/08/2004'
+        },
+        {
+            id: 7,
+            name: 'Leo Pereira',
+            birthday: '12/08/2004'
+        },
+        {
+            id: 8,
+            name: 'Fabricio Bruno',
+            birthday: '12/08/2004'
+        },
+        {
+            id: 9,
+            name: 'João Gomes',
             birthday: '01/01/1988'
         }
     ]
@@ -199,10 +227,16 @@ const { getDay, getMonth } = useUtils()
         &__grid {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
+            gap: $g-8 0;
         }
 
         &__day {
             position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: $fs-12;
+            font-weight: bold;
         }
     }
-</style>@/utils/useUtils
+</style>

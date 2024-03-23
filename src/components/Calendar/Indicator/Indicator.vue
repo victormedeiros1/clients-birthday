@@ -1,19 +1,59 @@
 <template>
-    <span class="indicator"></span>
+    <span :class="`indicator indicator--${intensity}`"></span>
 </template>
 
 <script setup lang="ts">
+    interface Props {
+        intensity: number
+    }
+
+    defineProps<Props>()
 </script>
 
 <style scoped lang="scss">
     .indicator {
         position: absolute;
-        top: 0;
-        left: -4px;
         display: block;
         width: .25rem;
         height: .25rem;
         border-radius: 50%;
-        background-color: $red;
+        background-color: $blue;
+        opacity: 1;
+
+        &--1 {
+            width: .75rem;
+            height: .75rem;
+            opacity: 0.2;
+        }
+        &--2 {
+            width: 1rem;
+            height: 1rem;
+            opacity: 0.25;
+        }
+        &--2 {
+            width: 1.25rem;
+            height: 1.25rem;
+            opacity: 0.30;
+        }
+        &--3 {
+            width: 1.5rem;
+            height: 1.5rem;
+            opacity: 0.35;
+        }
+        &--3 {
+            width: 1.75rem;
+            height: 1.75rem;
+            opacity: 0.40;
+        }
+        &--4 {
+            width: 2rem;
+            height: 2rem;
+            opacity: 0.45;
+        }
+        &--4 {
+            width: 2.25rem;
+            height: 2.25rem;
+            opacity: 0.50;
+        }
     }
 </style>
