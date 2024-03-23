@@ -18,7 +18,7 @@
 <script setup lang="ts">
 import { Month } from '@/types/Calendar';
 import { Customer, CustomerName } from '@/types/Customers';
-import Indicator from './Indicator/Indicator.vue';
+import { Indicator } from "@/components/Calendar";
 import { onMounted, ref } from 'vue';
 
 import useUtils from '@/utils/useUtils'
