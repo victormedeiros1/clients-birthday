@@ -1,16 +1,33 @@
 <template>
     <div class="calendar">
-        <div class="month" v-for="{ id, name, days } in calendar" :key="id">
-            <div class="month__header">
-                <h3 class="month__name">{{ name }}</h3>
+        <div class="calendar__header">
+            <div class="today">
+                <h1>Hoje é dia {{ today }}</h1>
+
+                <div class="today__birthdays">
+                    <h3 v-if="getBirthdays.length === 0">Não há aniversariantes</h3>
+                    <ul v-else v-for=" birthday in getBirthdays" :key="birthday.id">
+                        <li>
+                            <h3>{{ birthday.name }}</h3>
+                        </li>
+                    </ul>
+
+                </div>
             </div>
-            <div class="month__body">
-                <div class="month__grid">
-                    <Day
-                        v-for="({ birthdays, number }) in days" :key="number"
-                        :birthdays="birthdays" 
-                        :number="number" 
-                    />
+        </div>
+        <div class="calendar__body">
+            <div class="month" v-for="{ id, name, days } in calendar" :key="id">
+                <div class="month__header">
+                    <h3 class="month__name">{{ name }}</h3>
+                </div>
+                <div class="month__body">
+                    <div class="month__grid">
+                        <Day
+                            v-for="({ birthdays, number }) in days" :key="number"
+                            :birthdays="birthdays" 
+                            :number="number" 
+                        />
+                    </div>
                 </div>
             </div>
         </div>
@@ -21,11 +38,13 @@
 import { Month } from '@/types/Calendar';
 import { Customer } from '@/types/Customers';
 import { Day } from '@/components/Calendar'
-import { onMounted, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 
 import useUtils from '@/utils/useUtils'
 
 const { getDay, getMonth } = useUtils()
+
+    const today = new Date().toLocaleDateString()
 
     const customers: Customer[] = [
         {
@@ -87,9 +106,13 @@ const { getDay, getMonth } = useUtils()
             id: 11,
             name: 'João Gomes',
             birthday: '01/01/1988'
+        },
+        {
+            id: 12,
+            name: 'Casemiro',
+            birthday: '24/03/1988'
         }
     ]
-
     const calendar = ref<Month[]>([
         {
             id: 0,
@@ -177,6 +200,17 @@ const { getDay, getMonth } = useUtils()
         }
     ])
 
+    const getBirthdays = computed(() => {
+        const todayDayAndMonth = getDay(today) + '/' + getMonth(today)
+        const birthdaysToday = customers.filter(({ birthday }) => {
+            const customerDayAndMonth = 
+                getDay(birthday) + '/' + getMonth(birthday)
+
+            return todayDayAndMonth === customerDayAndMonth
+        })
+
+        return birthdaysToday
+    })
 
     function fillCalendarWithBirthdays (month: Month, customers: Customer[]) {
         // TODO
@@ -224,27 +258,44 @@ const { getDay, getMonth } = useUtils()
 <style scoped lang="scss">
     .calendar {
         display: flex;
-        justify-content: center;
-        flex-wrap: wrap;
-        flex: 1;
-        gap: $g-8;
-    }
-
-    .month {
-        width: 100%;
-        max-width: 300px;
-        border: 1px solid $gray;
-        border-radius: .375rem;
+        flex-direction: column;
+        gap: $g-32;
 
         &__header {
             background-color: $orange;
             color: $light;
-            padding: $p-8;
+            text-align: center;
+            border: 1px solid $gray;
+            border-radius: .375rem;
+            padding: $p-32;
         }
 
-        &__grid {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
+        &__body {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            flex: 1;
+            gap: $g-8;
+
+            .month {
+                width: 100%;
+                max-width: 300px;
+                border: 1px solid $gray;
+                border-radius: .375rem;
+
+                &__header {
+                    background-color: $orange;
+                    color: $light;
+                    border-top-left-radius: .375rem;
+                    border-top-right-radius: .375rem;
+                    padding: $p-8;
+                }
+
+                &__grid {
+                    display: grid;
+                    grid-template-columns: repeat(7, 1fr);
+                }
+            }
         }
     }
 </style>

@@ -26,17 +26,11 @@
         left: 0;
         background-color: $orange-op-06;
         backdrop-filter: blur(4px);
-        border-radius: 8px;
+        border-radius: 0.5rem;
         width: fit-content;
         display: block;
         z-index: $layer-tooltip;
         padding: $p-8;
-
-        &__list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
 
         &__item {
             white-space: nowrap;
