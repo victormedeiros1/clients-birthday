@@ -3,13 +3,11 @@
         <div class="month" v-for="{ id, name, days } in calendar" :key="id">
             <h3 class="month__name">{{ name }}</h3>
             <div class="month__grid">
-                <span class="month__day" v-for="({ birthdays, number }) in days" :key="number">
-                    {{ number }}
-                    <Indicator
-                        v-if="haveBirthdayInThisDay(birthdays)"
-                        :intensity="birthdays.length"
-                     />
-                </span>
+                <Day
+                    class="day" 
+                    v-for="({ birthdays, number }) in days" :key="number"
+                    :birthdays="birthdays" :number="number" 
+                />
             </div>
         </div>
     </div>
@@ -17,8 +15,8 @@
 
 <script setup lang="ts">
 import { Month } from '@/types/Calendar';
-import { Customer, CustomerName } from '@/types/Customers';
-import { Indicator } from "@/components/Calendar";
+import { Customer } from '@/types/Customers';
+import { Day } from '@/components/Calendar'
 import { onMounted, ref } from 'vue';
 
 import useUtils from '@/utils/useUtils'
@@ -73,6 +71,16 @@ const { getDay, getMonth } = useUtils()
         },
         {
             id: 9,
+            name: 'Haaland',
+            birthday: '12/08/2004'
+        },
+        {
+            id: 10,
+            name: 'Bellingham',
+            birthday: '12/08/2004'
+        },
+        {
+            id: 11,
             name: 'João Gomes',
             birthday: '01/01/1988'
         }
@@ -164,10 +172,7 @@ const { getDay, getMonth } = useUtils()
             days: {}
         }
     ])
-    
-    const haveBirthdayInThisDay = (birthdays: CustomerName[]) => {
-        return birthdays.length > 0
-    }
+
 
     function fillCalendarWithBirthdays (month: Month, customers: Customer[]) {
         // TODO
@@ -231,16 +236,6 @@ const { getDay, getMonth } = useUtils()
         &__grid {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
-            gap: $g-12 0;
-        }
-
-        &__day {
-            position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: $fs-16;
-            font-weight: bold;
         }
     }
 </style>

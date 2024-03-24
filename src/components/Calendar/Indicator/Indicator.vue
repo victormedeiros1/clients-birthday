@@ -1,13 +1,20 @@
 <template>
-    <span :class="`indicator indicator--${intensity}`"></span>
+    <div :class="`indicator indicator--${intensity}`"><slot /></div>
 </template>
 
 <script setup lang="ts">
+    import { CustomerName } from "@/types/Customers";
+    import { computed } from "vue"
+
     interface Props {
-        intensity: number
+        birthdays: CustomerName[]
     }
 
-    defineProps<Props>()
+    const props = defineProps<Props>()
+
+    const intensity = computed(() => {
+        return props.birthdays.length
+    })
 </script>
 
 <style scoped lang="scss">
@@ -19,41 +26,32 @@
         border-radius: 50%;
         background-color: $blue;
         opacity: 1;
+        z-index: $layer-1;
 
         &--1 {
             width: 1rem;
             height: 1rem;
-            opacity: 0.3;
+            background-color: $orange-op-02;
         }
         &--2 {
             width: 1.25rem;
             height: 1.25rem;
-            opacity: 0.35;
+            background-color: $orange-op-03;
         }
-        &--2 {
+        &--3 {
             width: 1.5rem;
             height: 1.5rem;
-            opacity: 0.4;
+            background-color: $orange-op-04;
         }
-        &--3 {
+        &--4 {
             width: 1.75rem;
             height: 1.75rem;
-            opacity: 0.45;
+            background-color: $orange-op-05;
         }
-        &--3 {
+        &--5 {
             width: 2rem;
             height: 2rem;
-            opacity: 0.5;
-        }
-        &--4 {
-            width: 2.25rem;
-            height: 2.25rem;
-            opacity: 0.55;
-        }
-        &--4 {
-            width: 2.5rem;
-            height: 2.5rem;
-            opacity: 0.6;
+            background-color: $orange-op-06;
         }
     }
 </style>
