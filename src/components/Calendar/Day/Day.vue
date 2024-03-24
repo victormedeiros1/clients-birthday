@@ -47,5 +47,7 @@
         align-items: center;
         font-size: $fs-16;
         font-weight: bold;
+        border-top: 1px solid $gray;
+        padding: $p-8;
     }
 </style>

@@ -1,13 +1,17 @@
 <template>
     <div class="calendar">
         <div class="month" v-for="{ id, name, days } in calendar" :key="id">
-            <h3 class="month__name">{{ name }}</h3>
-            <div class="month__grid">
-                <Day
-                    class="day" 
-                    v-for="({ birthdays, number }) in days" :key="number"
-                    :birthdays="birthdays" :number="number" 
-                />
+            <div class="month__header">
+                <h3 class="month__name">{{ name }}</h3>
+            </div>
+            <div class="month__body">
+                <div class="month__grid">
+                    <Day
+                        v-for="({ birthdays, number }) in days" :key="number"
+                        :birthdays="birthdays" 
+                        :number="number" 
+                    />
+                </div>
             </div>
         </div>
     </div>
@@ -89,84 +93,84 @@ const { getDay, getMonth } = useUtils()
     const calendar = ref<Month[]>([
         {
             id: 0,
-            name: 'janeiro',
+            name: 'JANEIRO',
             number: '01',
             daysQuantity: 31,
             days: {}
         },
         {
             id: 1,
-            name: 'fevereiro',
+            name: 'FEVEREIRO',
             number: '02',
             daysQuantity: 28,
             days: {}
         },
         {
             id: 2,
-            name: 'março',
+            name: 'MARÇO',
             number: '03',
             daysQuantity: 31,
             days: {}
         },
         {
             id: 3,
-            name: 'abril',
+            name: 'ABRIL',
             number: '04',
             daysQuantity: 30,
             days: {}
         },
         {
             id: 4,
-            name: 'maio',
+            name: 'MAIO',
             number: '05',
             daysQuantity: 31,
             days: {}
         },
         {
             id: 5,
-            name: 'junho',
+            name: 'JUNHO',
             number: '06',
             daysQuantity: 30,
             days: {}
         },
         {
             id: 6,
-            name: 'julho',
+            name: 'JULHO',
             number: '07',
             daysQuantity: 31,
             days: {}
         },
         {
             id: 7,
-            name: 'agosto',
+            name: 'AGOSTO',
             number: '08',
             daysQuantity: 31,
             days: {}
         },
         {
             id: 8,
-            name: 'setembro',
+            name: 'SETEMBRO',
             number: '09',
             daysQuantity: 30,
             days: {}
         },
         {
             id: 9,
-            name: 'outubro',
+            name: 'OUTUBRO',
             number: '10',
             daysQuantity: 31,
             days: {}
         },
         {
             id: 10,
-            name: 'novembro',
+            name: 'NOVEMBRO',
             number: '11',
             daysQuantity: 30,
             days: {}
         },
         {
             id: 11,
-            name: 'dezembro',
+            name: 'DEZEMBRO',
             number: '12',
             daysQuantity: 31,
             days: {}
@@ -231,7 +235,12 @@ const { getDay, getMonth } = useUtils()
         max-width: 300px;
         border: 1px solid $gray;
         border-radius: .375rem;
-        padding: $p-8;
+
+        &__header {
+            background-color: $orange;
+            color: $light;
+            padding: $p-8;
+        }
 
         &__grid {
             display: grid;
