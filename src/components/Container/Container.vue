@@ -16,5 +16,9 @@
         border-right: 1px solid $gray;
         border-left: 1px solid $gray;
         padding: $p-64;
+
+        @media (max-width: 768px) {
+            padding: $p-20;
+        }
     }
 </style>
