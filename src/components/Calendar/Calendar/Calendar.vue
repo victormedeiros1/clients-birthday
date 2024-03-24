@@ -6,12 +6,14 @@
 
                 <div class="today__birthdays">
                     <h3 v-if="getBirthdays.length === 0">Não há aniversariantes</h3>
-                    <ul v-else v-for=" birthday in getBirthdays" :key="birthday.id">
-                        <li>
-                            <h3>{{ birthday.name }}</h3>
-                        </li>
-                    </ul>
-
+                    <div v-else>
+                        <h3>Aniversariantes de hoje:</h3>
+                        <ul v-for=" birthday in getBirthdays" :key="birthday.id">
+                            <li>
+                                <h3>{{ birthday.name }}</h3>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
