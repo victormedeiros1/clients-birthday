@@ -24,7 +24,7 @@
         position: absolute;
         bottom: 100%;
         left: 0;
-        background-color: $orange-op-06;
+        background-color: $orange-op-05;
         backdrop-filter: blur(4px);
         border-radius: 0.5rem;
         width: fit-content;
