@@ -40,6 +40,7 @@
 import { Month } from '@/types/Calendar';
 import { Customer } from '@/types/Customers';
 import { Day } from '@/components/Calendar'
+import { customers } from "@/mocks"
 import { computed, onMounted, ref } from 'vue';
 
 import useUtils from '@/utils/useUtils'
@@ -48,73 +49,6 @@ const { getDay, getMonth } = useUtils()
 
     const today = new Date().toLocaleDateString()
 
-    const customers: Customer[] = [
-        {
-            id: 0,
-            name: 'Marquinhos',
-            birthday: '01/01/2001'
-        },
-        {
-            id: 1,
-            name: 'Arrascaeta',
-            birthday: '02/01/2003'
-        },
-        {
-            id: 2,
-            name: 'Bruno Henrique',
-            birthday: '03/01/1995'
-        },
-        {
-            id: 3,
-            name: 'Gerson',
-            birthday: '05/08/1975'
-        },
-        {
-            id: 4,
-            name: 'Everton Ribeiro',
-            birthday: '05/08/2000'
-        },
-        {
-            id: 5,
-            name: 'Gabriel Barbosa',
-            birthday: '05/08/2004'
-        },
-        {
-            id: 6,
-            name: 'Pedro',
-            birthday: '12/08/2004'
-        },
-        {
-            id: 7,
-            name: 'Leo Pereira',
-            birthday: '12/08/2004'
-        },
-        {
-            id: 8,
-            name: 'Fabricio Bruno',
-            birthday: '12/08/2004'
-        },
-        {
-            id: 9,
-            name: 'Haaland',
-            birthday: '12/08/2004'
-        },
-        {
-            id: 10,
-            name: 'Bellingham',
-            birthday: '12/08/2004'
-        },
-        {
-            id: 11,
-            name: 'João Gomes',
-            birthday: '01/01/1988'
-        },
-        {
-            id: 12,
-            name: 'Casemiro',
-            birthday: '24/03/1988'
-        }
-    ]
     const calendar = ref<Month[]>([
         {
             id: 0,
